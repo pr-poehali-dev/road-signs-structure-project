@@ -170,7 +170,7 @@ export default function Index() {
     : products.filter(p => p.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-green-50/30 to-yellow-50/30">
+    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50/30 to-yellow-50/30">
       <header className="sticky top-0 z-40 backdrop-blur-xl bg-white/80 border-b border-border shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -218,7 +218,7 @@ export default function Index() {
             </Badge>
             <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
               Современные решения для{' '}
-              <span className="bg-gradient-to-r from-primary via-green-500 to-secondary bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-primary via-blue-500 to-secondary bg-clip-text text-transparent">
                 безопасности дорог
               </span>
             </h2>
@@ -228,7 +228,7 @@ export default function Index() {
             <div className="flex flex-wrap gap-4 justify-center">
               <Button 
                 size="lg" 
-                className="bg-gradient-to-r from-primary to-green-500 hover:opacity-90 shadow-lg text-base px-8 h-14"
+                className="bg-gradient-to-r from-primary to-blue-500 hover:opacity-90 shadow-lg text-base px-8 h-14"
                 onClick={() => {
                   setRequestProductName('Каталог продукции');
                   setShowRequestForm(true);
@@ -336,7 +336,7 @@ export default function Index() {
                     </div>
                     <Button 
                       size="sm"
-                      className="bg-gradient-to-r from-primary to-green-500 hover:opacity-90"
+                      className="bg-gradient-to-r from-primary to-blue-500 hover:opacity-90"
                       onClick={(e) => {
                         e.stopPropagation();
                         setSelectedProduct(product);
