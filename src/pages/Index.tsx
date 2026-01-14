@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
+import RequestForm from '@/components/RequestForm';
 
 interface Product {
   id: string;
@@ -162,6 +163,8 @@ const categories = [
 export default function Index() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [showRequestForm, setShowRequestForm] = useState(false);
+  const [requestProductName, setRequestProductName] = useState('');
 
   const filteredProducts = selectedCategory === 'all' 
     ? products 
@@ -184,11 +187,20 @@ export default function Index() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm">
-                <Icon name="Phone" size={16} className="mr-2" />
-                +7 (383) 000-00-00
+              <Button variant="ghost" size="sm" asChild>
+                <a href="tel:+73830000000">
+                  <Icon name="Phone" size={16} className="mr-2" />
+                  +7 (383) 000-00-00
+                </a>
               </Button>
-              <Button variant="default" size="sm">
+              <Button 
+                variant="default" 
+                size="sm"
+                onClick={() => {
+                  setRequestProductName('');
+                  setShowRequestForm(true);
+                }}
+              >
                 Получить КП
               </Button>
             </div>
@@ -214,11 +226,25 @@ export default function Index() {
                 Соответствие ГОСТ Р и требованиям БКД. Гарантия до 5 лет.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button size="lg" className="bg-primary hover:bg-primary/90">
+                <Button 
+                  size="lg" 
+                  className="bg-primary hover:bg-primary/90"
+                  onClick={() => {
+                    setRequestProductName('Каталог продукции');
+                    setShowRequestForm(true);
+                  }}
+                >
                   <Icon name="FileText" size={18} className="mr-2" />
                   Скачать каталог
                 </Button>
-                <Button size="lg" variant="outline">
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  onClick={() => {
+                    setRequestProductName('Расчет проекта');
+                    setShowRequestForm(true);
+                  }}
+                >
                   <Icon name="Calculator" size={18} className="mr-2" />
                   Рассчитать проект
                 </Button>
@@ -329,7 +355,13 @@ export default function Index() {
                     </div>
                     <div className="flex items-center justify-between pt-4 border-t border-border">
                       <div className="text-2xl font-bold text-primary">{product.price}</div>
-                      <Button size="sm">
+                      <Button 
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProduct(product);
+                        }}
+                      >
                         Подробнее
                         <Icon name="ArrowRight" size={16} className="ml-2" />
                       </Button>
@@ -384,13 +416,22 @@ export default function Index() {
                 Бесплатный выезд специалиста на объект в Новосибирске.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                <Button size="lg" className="bg-primary hover:bg-primary/90">
+                <Button 
+                  size="lg" 
+                  className="bg-primary hover:bg-primary/90"
+                  onClick={() => {
+                    setRequestProductName('');
+                    setShowRequestForm(true);
+                  }}
+                >
                   <Icon name="Send" size={18} className="mr-2" />
                   Оставить заявку
                 </Button>
-                <Button size="lg" variant="outline">
-                  <Icon name="Phone" size={18} className="mr-2" />
-                  Позвонить сейчас
+                <Button size="lg" variant="outline" asChild>
+                  <a href="tel:+73830000000">
+                    <Icon name="Phone" size={18} className="mr-2" />
+                    Позвонить сейчас
+                  </a>
                 </Button>
               </div>
             </div>
@@ -518,11 +559,26 @@ export default function Index() {
                 <div className="pt-6 border-t border-border space-y-4">
                   <div className="text-3xl font-bold text-primary">{selectedProduct.price}</div>
                   <div className="flex gap-3">
-                    <Button className="flex-1 bg-primary hover:bg-primary/90">
+                    <Button 
+                      className="flex-1 bg-primary hover:bg-primary/90"
+                      onClick={() => {
+                        setRequestProductName(selectedProduct.name);
+                        setSelectedProduct(null);
+                        setShowRequestForm(true);
+                      }}
+                    >
                       <Icon name="ShoppingCart" size={18} className="mr-2" />
                       Заказать
                     </Button>
-                    <Button variant="outline" className="flex-1">
+                    <Button 
+                      variant="outline" 
+                      className="flex-1"
+                      onClick={() => {
+                        setRequestProductName(`ТЗ на ${selectedProduct.name}`);
+                        setSelectedProduct(null);
+                        setShowRequestForm(true);
+                      }}
+                    >
                       <Icon name="Download" size={18} className="mr-2" />
                       Скачать ТЗ
                     </Button>
@@ -532,6 +588,13 @@ export default function Index() {
             </div>
           </Card>
         </div>
+      )}
+
+      {showRequestForm && (
+        <RequestForm 
+          productName={requestProductName}
+          onClose={() => setShowRequestForm(false)}
+        />
       )}
     </div>
   );

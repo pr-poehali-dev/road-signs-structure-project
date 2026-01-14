@@ -1,0 +1,48 @@
+{
+  "tests": [
+    {
+      "name": "Отправка заявки с минимальными данными",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "name": "Иван Петров",
+        "phone": "+7 (383) 123-45-67"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Отправка полной заявки",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "name": "Мария Сидорова",
+        "phone": "+7 (383) 987-65-43",
+        "email": "maria@example.com",
+        "product": "Светодиодный знак 1.23",
+        "message": "Нужна консультация по установке"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Заявка без обязательных полей",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "email": "test@example.com"
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
